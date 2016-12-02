@@ -6,13 +6,14 @@ from mqtt_reporting.models import WlanUsage
 
 def on_connect(client, userdata, rc):
   printLogs("[ON_CONNECT]"+"Connected with result code "+str(rc))
-  client.subscribe("rpi/rx")
+  client.subscribe("rpi/wlan0/#")
 
 def on_message(client, userdata, msg):
   printLogs("[ON_MESSAGE]"+msg.topic+" "+str(msg.payload))
   print "topic: " + msg.topic +", message : " + str(msg.payload)
 
-  w = WlanUsage(mInterface='wlan0', mPackets=int(msg.payload), mType='rx')
+  lTopic = (msg.topic).split("/")
+  w = WlanUsage(mInterface='wlan0', mPackets=int(msg.payload), mType=lTopic[2])
   w.save()
 
 def execCmd(inCmd):
