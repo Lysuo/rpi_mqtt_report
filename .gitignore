@@ -1,0 +1,15 @@
+settings.py
+db.sqlite3
+logFile
+auth.py
+
+bin/
+include/
+local/
+lib/
+
+*.log
+*.pot
+__pycache__/
+*.py[cod]
+*.pyc
