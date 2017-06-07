@@ -18,7 +18,7 @@ class SensorDHEntry(models.Model):
   mInterface = models.CharField(default='unknown', max_length=10) 
   mTemperature = models.FloatField(default=0.0) 
   mHumidity = models.FloatField(default=0.0)
-  mDate = models.DateTimeField(auto_now_add=False)
+  mDate = models.DateTimeField(auto_now_add=True)
   mTimezone = models.CharField(max_length=200)
 
   def __unicode__(self):

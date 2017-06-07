@@ -15,9 +15,9 @@ def on_message(client, userdata, msg):
   print "topic: " + msg.topic +", message : " + str(msg.payload)
 
   lTopic = (msg.topic).split("/")
-  lPayload = (msg.payload).split("/")
+  lPayload = (msg.payload).split("#")
   if lTopic[1] == "sensor":
-    w = SensorDHEntry(mInterface="sensorDHT22-int", mTemperature=lPayload[0], mHumidity=lPayload[1])
+    w = SensorDHEntry(mInterface="sensorDHT22-int", mTemperature=lPayload[0], mHumidity=lPayload[1], mTimezone=lPayload[2])
 #    elif lTopic[2] == "temperature":
     w.save()
   else:
