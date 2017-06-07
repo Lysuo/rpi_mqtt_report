@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^mqtt/', include('mqtt_reporting.urls')),
     url(r'^restapi/', include('restapi.urls')),
+    url(r'^webapp/', include('webapp.urls')),
     ]

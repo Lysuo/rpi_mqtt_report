@@ -1,0 +1,32 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/own-style.css' %}" />
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
+    <title>{% block title %}Base title{% endblock %}</title>
+  </head>
+
+  <body>
+
+    <h1>Se connecter</h1>
+
+    {% if error %}
+    <p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    Vous êtes connecté, {{ user.username }} !
+    {% else %}
+    <form method="post" action=".">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Se connecter" />
+    </form>
+    {% endif %}
+
+
+  </body>
+</html>

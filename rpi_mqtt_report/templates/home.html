@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/own-style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/own-d3js.css' %}" />
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
+    <title>{% block title %}D3JS DHT22{% endblock %}</title>
+  </head>
+
+  <body>
+
+    <div class="container">
+
+    <h2>Bonjour, bonjour ! =)</h2><br/><br/>
+
+    {% if user.is_authenticated %}
+    Vous êtes connecté, {{ user.username }} !
+    {% endif %}
+
+
+    <svg id="visualisation" width="1000" height="500"></svg>
+
+
+    <br /><br />
+
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> <!-- jQuery est inclus ! -->
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="/static/js/sampleData.js"></script>
+    <script src="/static/js/own-d3js.js"></script>
+  </body>
+</html>
