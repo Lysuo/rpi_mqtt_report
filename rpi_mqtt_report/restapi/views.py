@@ -7,9 +7,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response 
 from rest_framework import status
 
-from mqtt_reporting.models import SensorDHEntry
-from restapi.serializers import SensorDHEntrySerializer
-
+from mqtt_reporting.models import SensorDHEntry, SensorDHEntryComp
+from restapi.serializers import SensorDHEntrySerializer, SensorDHEntryCompSerializer
 
 from threading import Thread
 
@@ -30,15 +29,18 @@ class SensorDHEntryRest(APIView):
 
     start_date = start_date.astimezone(tz_utc)
     end_date = end_date.astimezone(tz_utc)
-
-    print start_date
-    print end_date
-
-    #l = SensorDHEntry.objects.all()
     l = SensorDHEntry.objects.filter(mDate__range=(start_date, end_date))
 
     for e in l:
       e.mDate = (e.mDate).astimezone(tz_r)
 
-    serializer = SensorDHEntrySerializer(l, many=True)
+    lcomp = []
+    for i in range(0,24):
+      lin = [e.mTemperature for e in l if e.mDate.hour == i]
+      if len(lin) != 0:
+        av = float(sum(lin))/float(len(lin))
+        o = SensorDHEntryComp(mHour=i, mTemperatureAv=av)
+        lcomp.append(o)
+
+    serializer = SensorDHEntryCompSerializer(lcomp, many=True)
     return Response(serializer.data)

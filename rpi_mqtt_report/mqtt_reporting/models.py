@@ -23,3 +23,11 @@ class SensorDHEntry(models.Model):
 
   def __unicode__(self):
     return self.mInterface
+
+
+class SensorDHEntryComp(models.Model):
+  mTemperatureAv = models.FloatField(default=0.0) 
+  mHour = models.IntegerField(default=-1)
+
+  def __unicode__(self):
+    return self.TemperatureAv

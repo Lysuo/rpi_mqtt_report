@@ -1,14 +1,21 @@
-from mqtt_reporting.models import SensorDHEntry 
+from mqtt_reporting.models import SensorDHEntry, SensorDHEntryComp
 from rest_framework import serializers
 import datetime
 
 class SensorDHEntrySerializer(serializers.ModelSerializer):
-  mId = serializers.CharField(source="id", required=False)
   mTemperature = serializers.FloatField()
   mHumidity = serializers.FloatField()
-  mDate = serializers.DateTimeField()
-  mTimezone = serializers.CharField()
+  mDate = serializers.DateTimeField(format="%H")
 
   class Meta:
     model = SensorDHEntry 
-    fields = ('mId', 'mTemperature', 'mHumidity', 'mDate', 'mTimezone')
+    fields = ('mTemperature', 'mHumidity', 'mDate')
+
+
+class SensorDHEntryCompSerializer(serializers.ModelSerializer):
+  temp = serializers.FloatField(source="mTemperatureAv")
+  hour = serializers.IntegerField(source="mHour")
+
+  class Meta:
+    model = SensorDHEntryComp
+    fields = ('temp', 'hour')

@@ -1,4 +1,4 @@
-.axis path {
+/*.axis path {
   fill: none;
   stroke: #777;
   shape-rendering: crispEdges;
@@ -6,4 +6,23 @@
 .axis text {
   font-family: Lato;
   font-size: 13px;
+}*/
+
+.bar{
+  fill: steelblue;
+}
+
+.bar:hover{
+  fill: brown;
+}
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
 }
