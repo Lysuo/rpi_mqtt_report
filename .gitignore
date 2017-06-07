@@ -1,7 +1,7 @@
 settings.py
+auth.py
 db.sqlite3
 logFile
-auth.py
 
 bin/
 include/
