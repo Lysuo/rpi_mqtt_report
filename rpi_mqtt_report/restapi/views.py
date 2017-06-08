@@ -38,7 +38,7 @@ class SensorDHEntryRest(APIView):
     for i in range(0,24):
       lint = [e.mTemperature for e in l if e.mDate.hour == i]
       linh = [e.mHumidity for e in l if e.mDate.hour == i]
-      if len(lin) != 0:
+      if len(lint) != 0:
         avt = float(sum(lint))/float(len(lint))
         avh = float(sum(linh))/float(len(linh))
         o = SensorDHEntryComp(mHour=i, mTemperatureAv=avt, mHumidityAv=avh)
