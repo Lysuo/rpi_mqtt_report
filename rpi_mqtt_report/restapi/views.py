@@ -13,6 +13,9 @@ from restapi.serializers import SensorDHEntrySerializer, SensorDHEntryCompSerial
 from threading import Thread
 
 
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
 class SensorDHEntryRest(APIView):
 
   def post(self, request, format=None):
