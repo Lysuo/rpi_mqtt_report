@@ -27,6 +27,7 @@ class SensorDHEntry(models.Model):
 
 class SensorDHEntryComp(models.Model):
   mTemperatureAv = models.FloatField(default=0.0) 
+  mHumidityAv = models.FloatField(default=0.0) 
   mHour = models.IntegerField(default=-1)
 
   def __unicode__(self):

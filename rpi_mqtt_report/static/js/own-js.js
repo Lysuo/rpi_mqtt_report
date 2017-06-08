@@ -8,32 +8,23 @@ $(function(){
     return d;
   }
 
-  $('#date-visu').empty();
-  $('#date-visu').append(currDate);
-
-  $('#button-test').click(
-    function () {
-      getData (currDate);
-    });
-
   $('#previous-date').click(
     function () {
-      currDate = getNextDate(currDate, -1);
-      $('#date-visu').empty();
-      $('#date-visu').append(currDate);
-      getData (currDate);
+      getData (-1);
     });
 
   $('#next-date').click(
-      function () {
-        currDate = getNextDate(currDate, 1);
-        $('#date-visu').empty();
-        $('#date-visu').append(currDate);
-        getData (currDate);
-      });
+    function () {
+      getData (1);
+    });
 
-  function getData (date) {
-    dataToSend = { 'reqdatey' : date.getFullYear(), 'reqdatem' : date.getMonth()+1, 'reqdated' : date.getDate(), 'tzinfo': 'America/Argentina/Buenos_Aires' };
+  function getData (dir) {
+
+    currDate = getNextDate(currDate, dir);
+    $('#date-visu').empty();
+    $('#date-visu').append(currDate.toString());
+
+    dataToSend = { 'reqdatey' : currDate.getFullYear(), 'reqdatem' : currDate.getMonth()+1, 'reqdated' : currDate.getDate(), 'tzinfo': 'America/Argentina/Buenos_Aires' };
     console.log(dataToSend);
 
     $.ajax({
@@ -67,5 +58,7 @@ $(function(){
       } 
     })
   };
+
+  getData(0);
 
 });

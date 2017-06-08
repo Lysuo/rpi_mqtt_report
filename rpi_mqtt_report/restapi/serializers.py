@@ -14,8 +14,9 @@ class SensorDHEntrySerializer(serializers.ModelSerializer):
 
 class SensorDHEntryCompSerializer(serializers.ModelSerializer):
   temp = serializers.FloatField(source="mTemperatureAv")
+  hum = serializers.FloatField(source="mHumidityAv")
   hour = serializers.IntegerField(source="mHour")
 
   class Meta:
     model = SensorDHEntryComp
-    fields = ('temp', 'hour')
+    fields = ('temp', 'hum', 'hour')

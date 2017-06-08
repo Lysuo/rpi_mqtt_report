@@ -36,11 +36,13 @@ class SensorDHEntryRest(APIView):
 
     lcomp = []
     for i in range(0,24):
-      lin = [e.mTemperature for e in l if e.mDate.hour == i]
+      lint = [e.mTemperature for e in l if e.mDate.hour == i]
+      linh = [e.mHumidity for e in l if e.mDate.hour == i]
       if len(lin) != 0:
-        av = float(sum(lin))/float(len(lin))
-        o = SensorDHEntryComp(mHour=i, mTemperatureAv=av)
+        avt = float(sum(lint))/float(len(lint))
+        avh = float(sum(linh))/float(len(linh))
+        o = SensorDHEntryComp(mHour=i, mTemperatureAv=avt, mHumidityAv=avh)
         lcomp.append(o)
 
     serializer = SensorDHEntryCompSerializer(lcomp, many=True)
-    return Response('{serializer.data, max: 19, min: 21, diff=2}')
+    return Response(serializer.data)
