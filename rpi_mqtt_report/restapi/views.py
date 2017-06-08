@@ -43,4 +43,4 @@ class SensorDHEntryRest(APIView):
         lcomp.append(o)
 
     serializer = SensorDHEntryCompSerializer(lcomp, many=True)
-    return Response(serializer.data)
+    return Response('{serializer.data, max: 19, min: 21, diff=2}')
