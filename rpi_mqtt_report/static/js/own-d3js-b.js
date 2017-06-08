@@ -1,3 +1,12 @@
+var dataBarChart = [];
+var svg = 0;
+
+function drawBarChart() {
+
+  if (svg != 0) {
+svg.selectAll('*').remove();
+  }
+
 // set the dimensions of the canvas
 var margin = {top: 20, right: 20, bottom: 70, left: 40},
     width = 600 - margin.left - margin.right,
@@ -6,7 +15,7 @@ var margin = {top: 20, right: 20, bottom: 70, left: 40},
 
 // set the ranges
 var x = d3.scale.linear().range([0, width]).domain([0,23]);
-var y = d3.scale.linear().range([height, 0]).domain([5,35]);
+var y = d3.scale.linear().range([height, 0]).domain([12,28]);
 
 // define the axis
   var xAxis = d3.svg.axis()
@@ -21,7 +30,7 @@ var y = d3.scale.linear().range([height, 0]).domain([5,35]);
 
 
   // add the SVG element
-  var svg = d3.select("#visualisation").append("svg")
+  svg = d3.select("#visualisation").append("svg")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -65,7 +74,7 @@ svg.append("g")
 
 // Add bar chart
 svg.selectAll("bar")
-  .data(data)
+  .data(dataBarChart)
   .enter().append("rect")
   .attr("class", "bar")
   .attr("x", function(d) { return x(d.hour); })
@@ -74,3 +83,5 @@ svg.selectAll("bar")
   .attr("height", function(d) { return height - y(d.temp); });
 
 //});
+
+};

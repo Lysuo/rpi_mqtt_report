@@ -15,11 +15,11 @@ from threading import Thread
 
 class SensorDHEntryRest(APIView):
 
-  def get(self, request, format=None):
-    dy = request.META.get('HTTP_REQDATEY')
-    dm = request.META.get('HTTP_REQDATEM')
-    dd = request.META.get('HTTP_REQDATED')
-    tz_str = request.META.get('HTTP_TZINFO')
+  def post(self, request, format=None):
+    dy = request.POST.get('reqdatey')
+    dm = request.POST.get('reqdatem')
+    dd = request.POST.get('reqdated')
+    tz_str = request.POST.get('tzinfo')
 
     tz_r = pytz.timezone(tz_str)
     tz_utc = pytz.timezone('UTC')
