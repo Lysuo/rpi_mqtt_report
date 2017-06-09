@@ -10,12 +10,22 @@ function drawBarChart() {
   // set the dimensions of the canvas
   var margin = {top: 20, right: 20, bottom: 70, left: 40},
       width = 600 - margin.left - margin.right,
-      height = 300 - margin.top - margin.bottom;
+      height = 350 - margin.top - margin.bottom;
+
+  // define min/max of data set
+  tempMin = d3.min(dataBarChart, function(d) { return Math.min(d.temp); });
+  tempMax = d3.max(dataBarChart, function(d) { return Math.max(d.temp); });
+  diffT = tempMax - tempMin;
+  humMin = d3.min(dataBarChart, function(d) { return Math.min(d.hum); });
+  humMax = d3.max(dataBarChart, function(d) { return Math.max(d.hum); });
+  diffH = humMax - humMin;
 
   // set the ranges
   var x = d3.scale.linear().range([0, width]).domain([0,24]);
-  var yt = d3.scale.linear().range([height, 0]).domain([15,24]);
-  var yh = d3.scale.linear().range([height, 0]).domain([50,60]);
+  var yt = d3.scale.linear().range([height, 0]).domain([tempMin-diffT/8, tempMax+diffT/8]);
+  var yh = d3.scale.linear().range([height, 0]).domain([humMin-diffH/8, humMax+diffH/8]);
+
+
 
   // define the axis
   var xAxis = d3.svg.axis().scale(x).orient("bottom");
@@ -27,6 +37,7 @@ function drawBarChart() {
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g") .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 
   // Add axis
   svg.append("g")
