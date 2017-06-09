@@ -14,8 +14,8 @@ var margin = {top: 20, right: 20, bottom: 70, left: 40},
 
 
 // set the ranges
-var x = d3.scale.linear().range([0, width]).domain([0,23]);
-var y = d3.scale.linear().range([height, 0]).domain([12,28]);
+var x = d3.scale.linear().range([0, width]).domain([0,24]);
+var y = d3.scale.linear().range([height, 0]).domain([15,24]);
 
 // define the axis
   var xAxis = d3.svg.axis()

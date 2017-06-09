@@ -12,10 +12,6 @@ from restapi.serializers import SensorDHEntrySerializer, SensorDHEntryCompSerial
 
 from threading import Thread
 
-
-from django.views.decorators.csrf import csrf_exempt
-
-@csrf_exempt
 class SensorDHEntryRest(APIView):
 
   def post(self, request, format=None):
@@ -23,6 +19,7 @@ class SensorDHEntryRest(APIView):
     dm = request.POST.get('reqdatem')
     dd = request.POST.get('reqdated')
     tz_str = request.POST.get('tzinfo')
+    d = request.POST.get('npph')
 
     tz_r = pytz.timezone(tz_str)
     tz_utc = pytz.timezone('UTC')
@@ -37,15 +34,25 @@ class SensorDHEntryRest(APIView):
     for e in l:
       e.mDate = (e.mDate).astimezone(tz_r)
 
-    lcomp = []
-    for i in range(0,24):
-      lint = [e.mTemperature for e in l if e.mDate.hour == i]
-      linh = [e.mHumidity for e in l if e.mDate.hour == i]
-      if len(lint) != 0:
-        avt = float(sum(lint))/float(len(lint))
-        avh = float(sum(linh))/float(len(linh))
-        o = SensorDHEntryComp(mHour=i, mTemperatureAv=avt, mHumidityAv=avh)
-        lcomp.append(o)
+    lcomp = computeData(l, int(d))
 
     serializer = SensorDHEntryCompSerializer(lcomp, many=True)
     return Response(serializer.data)
+
+def computeData(inputL, d):
+
+  lcomp = []
+  timeL = [e*0.01 for e in range(0, 2400, 100/d)]
+
+  for t in timeL:
+    # TODO improve: make a list of tuples
+    lint = [e.mTemperature for e in inputL if (e.mDate.hour == int(t) and float(int(float(e.mDate.minute)*d/60))/d == t - int(t))]
+    linh = [e.mHumidity for e in inputL if (e.mDate.hour == int(t) and float(int(float(e.mDate.minute)*d/60))/d == t - int(t))]
+
+    if len(lint) != 0:
+      avt = float("%.2f" % round(float(sum(lint))/float(len(lint)), 2))
+      avh = float("%.2f" % round(float(sum(linh))/float(len(linh)), 2))
+      o = SensorDHEntryComp(mHour=t, mTemperatureAv=avt, mHumidityAv=avh)
+      lcomp.append(o)
+
+  return lcomp

@@ -24,7 +24,12 @@ $(function(){
     $('#date-visu').empty();
     $('#date-visu').append(currDate.toString());
 
-    dataToSend = { 'reqdatey' : currDate.getFullYear(), 'reqdatem' : currDate.getMonth()+1, 'reqdated' : currDate.getDate(), 'tzinfo': 'America/Argentina/Buenos_Aires' };
+    dataToSend = { 'reqdatey' : currDate.getFullYear(),
+      'reqdatem' : currDate.getMonth()+1,
+      'reqdated' : currDate.getDate(),
+      'tzinfo': 'America/Argentina/Buenos_Aires',
+      'npph' : 2
+    };
     console.log(dataToSend);
 
     $.ajax({
