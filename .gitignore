@@ -3,6 +3,9 @@ auth.py
 db.sqlite3
 logFile
 
+auth.js
+own-js-ex.js
+
 bin/
 include/
 local/
