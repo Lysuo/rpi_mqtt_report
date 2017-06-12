@@ -15,29 +15,45 @@
 
       <h2>Hello!</h2><br/><br/>
 
-      <span id="date-visu"></span><br/>
 
-      <input type="button" id="previous-date" value="< previous" style="display: visible;" name="">
-      <input type="button" id="next-date" value="next >" style="display: visible;" name=""><br/><br/>
+      <div class="col-md-3">
+        <div class="row">
 
+          <span id="date-visu"></span><br/><br/>
+          <span>CURRENT VALUES INDOOR</span><br/><br/><span id="tempHumDisplay"></span><br/><br/>
+          <span>CURRENT VALUES OUTDOOR</span><br/><br/><span id="tempHumDisplayOut"></span>
 
-    <svg id="visualisation" width="1000" height="500"></svg>
+        </div>
+      </div>
 
+      <div class="col-md-8 col-md-offset-1">
+        <div class="row">
+          <span id="date-visu-graph"></span><br/>
 
-    <br /><br />
+          <input type="button" id="previous-date" value="< previous" style="display: visible;" name="">
+          <input type="button" id="next-date" value="next >" style="display: visible;" name=""><br/><br/>
 
+          <svg id="visualisation" width="1000" height="500"></svg>
+
+          <br /><br />
+
+        </div>
+      </div>
 
     </div>
-
+    <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
+    <!-- d3js -->
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="/static/js/d3js/own-d3js-b.js"></script>
+    <script src="static/js/d3js/own-d3js-b.js"></script>
 
-    <script src="/static/js/own-js.js"></script>
+    <!-- main -->
+    <script src="static/js/own-js.js"></script>
 
+    <!-- mqtt related -->
     <script src="static/js/mqtt/paho_lib/pahoMQTT.js"></script>
     <script src="static/js/mqtt/auth.js"></script>
-    <script src="/static/js/mqtt/own-mqtt.js"></script>
+    <script src="static/js/mqtt/own-mqtt.js"></script>
   </body>
 </html>

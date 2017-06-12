@@ -1,6 +1,10 @@
 $(function(){
 
   var currDate = new Date();
+  var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  var dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  $('#date-visu').append(currDate.toString());
   console.log(currDate);
 
   function getNextDate(d, dir) {
@@ -18,11 +22,19 @@ $(function(){
       getData (1);
     });
 
+  function displayTempHum (t, h) {
+    var html = "TEMP: "+t+"°C";
+    html += "RH: "+h+"%";
+    $('#tempHumDisplay').append(html);
+  };
+
+  startMQTT();
+
   function getData (dir) {
 
     currDate = getNextDate(currDate, dir);
-    $('#date-visu').empty();
-    $('#date-visu').append(currDate.toString());
+    $('#date-visu-graph').empty();
+    $('#date-visu-graph').append(dayNames[currDate.getDay()]+" "+currDate.getDate().toString()+" "+monthNames[currDate.getMonth()]+" "+currDate.getFullYear().toString());
 
     dataToSend = { 'reqdatey' : currDate.getFullYear(),
       'reqdatem' : currDate.getMonth()+1,
