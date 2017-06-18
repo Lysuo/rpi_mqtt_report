@@ -35,16 +35,17 @@ class SensorDHEntryRest(APIView):
     for e in l:
       e.mDate = (e.mDate).astimezone(tz_r)
 
-    r = computeData(l, int(d))
-#    serializer = SensorDHEntryCompSerializer(lcomp, many=True)
-    serializer = SensorDHRespSerializer(r)
+    [lcomp, r] = computeData(l, int(d))
+    sLcomp = SensorDHEntryCompSerializer(lcomp, many=True)
+    serializerR = SensorDHRespSerializer(r).data.copy()
+    serializerR['data'] = sLcomp.data
 
-    return Response(serializer.data)
+    return Response(serializerR)
 
 def computeData(inputL, d):
   
   r = SensorDHResp(mTimezoneData='America')
-  r.save()
+#  r.save()
   lcomp = []
   timeL = [e*0.01 for e in range(0, 2400, 100/d)]
 
@@ -57,7 +58,7 @@ def computeData(inputL, d):
       avt = float("%.2f" % round(float(sum(lint))/float(len(lint)), 2))
       avh = float("%.2f" % round(float(sum(linh))/float(len(linh)), 2))
       o = SensorDHEntryComp(mSensorDHResp=r, mHour=t, mTemperatureAv=avt, mHumidityAv=avh)
-      o.save()
-      #lcomp.append(o)
+#      o.save()
+      lcomp.append(o)
 
-  return r 
+  return [lcomp, r]

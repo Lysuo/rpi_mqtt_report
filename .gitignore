@@ -3,6 +3,8 @@ auth.py
 db.sqlite3
 logFile
 
+vt.py
+
 auth.js
 own-js-ex.js
 

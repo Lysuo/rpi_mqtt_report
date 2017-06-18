@@ -30,7 +30,8 @@ class SensorDHRespSerializer(serializers.ModelSerializer):
   mHumidityMax = serializers.FloatField()
   mHumidityMin = serializers.FloatField()
   mHumidityAv = serializers.FloatField()
-  data = SensorDHEntryCompSerializer(source='get_entries', many=True, read_only=True)
+  data = SensorDHEntryCompSerializer(many=True, read_only=True)
+#  data = SensorDHEntryCompSerializer(source='get_entries', many=True, read_only=True)
 
   class Meta:
     model = SensorDHResp
