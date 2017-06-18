@@ -251,7 +251,7 @@ table.data td
 #footer {
     padding:5px 0px;
     font-size: 80%;
-    text-align: right;
+    text-align: left;
     border-top: 1px dotted #88a;
 }
 #footer p {

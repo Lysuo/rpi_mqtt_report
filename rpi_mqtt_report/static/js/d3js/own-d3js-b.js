@@ -1,18 +1,24 @@
 var dataBarChart = [];
 var svg = 0;
 
+// set the dimensions of the canvas
+var margin = {top: 40, right: 60, bottom: 40, left: 60},
+    width = 600,
+    height = 260;
+    fWidth = width + margin.left + margin.right;
+    fHeight = height + margin.top + margin.bottom;
+
+function cleanBarChart() {
+  if (svg != 0) {
+    svg.selectAll('*').remove();
+  }
+};
+
 function drawBarChart() {
 
   if (svg != 0) {
     svg.selectAll('*').remove();
   }
-
-  // set the dimensions of the canvas
-  var margin = {top: 40, right: 60, bottom: 40, left: 60},
-      width = 600,
-      height = 300;
-      fWidth = width + margin.left + margin.right;
-      fHeight = height + margin.top + margin.bottom;
 
   // define min/max of data set
   tempMin = d3.min(dataBarChart, function(d) { return Math.min(d.temp); });

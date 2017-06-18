@@ -6,15 +6,45 @@
     <link rel="stylesheet" href="{% static 'css/own-style.css' %}" />
     <link rel="stylesheet" href="{% static 'css/own-d3js.css' %}" />
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" />
+    <meta name="copyright" content="Copyright (c) 2017 Jérôme Gueret" />
+    <meta name="author" content="Jérôme Gueret" />
     <title>{% block title %}D3JS DHT22{% endblock %}</title>
   </head>
 
   <body>
 
+    <!-- HEADER -->
+
+    <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="col-md-12">
+
+        <div class="navbar-header">
+
+          <a class="navbar-brand" href="">Temperature & Humidity monitoring</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+            <p class="navbar-text" style="margin-top: 10px; margin-bottom: 0px;">
+            <a href="http://fr.linkedin.com/in/jeromegueret"><img src="{% static 'img/linkedin.png' %}" alt="LinkedIn" title="LinkedIn"></a>
+            <a href="http://github.com/Lysuo/rpi_mqtt_report"><img src="{% static 'img/github.png' %}" alt="GitHub" title="GitHub"></a>                                
+            </p>
+            </li>
+          </ul>		    
+        </div>
+      </div>
+    </div>
+
+    </nav>
+
+
+    <!-- CONTENT -->
+
     <div class="container">
-
-      <h2>Hello!</h2><br/><br/>
-
+      <br/><br/>
 
       <div class="col-md-3">
         <div class="row">
@@ -33,7 +63,7 @@
           <input type="button" id="previous-date" value="< previous" style="display: visible;" name="">
           <input type="button" id="next-date" value="next >" style="display: visible;" name=""><br/><br/>
 
-          <svg id="visualisation" width="720" height="380"></svg>
+          <span id="data-visualisation"></span>
 
           <br /><br />
 
@@ -41,6 +71,19 @@
       </div>
 
     </div>
+
+
+    <!-- FOOTER -->
+    <footer>
+    <hr />
+    <div class="container-fluid">
+      <div class="col-md-12">
+        <p id="footer-text">&copy; 2017 Jérôme Gueret. All rights reserved.</p>
+      </div>
+    </div>
+    </footer>
+
+
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
@@ -48,12 +91,14 @@
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="static/js/d3js/own-d3js-b.js"></script>
 
-    <!-- main -->
-    <script src="static/js/own-js.js"></script>
-
     <!-- mqtt related -->
     <script src="static/js/mqtt/paho_lib/pahoMQTT.js"></script>
     <script src="static/js/mqtt/auth.js"></script>
     <script src="static/js/mqtt/own-mqtt.js"></script>
+
+    <!-- main -->
+    <script src="static/js/own-js.js"></script>
+
+
   </body>
 </html>

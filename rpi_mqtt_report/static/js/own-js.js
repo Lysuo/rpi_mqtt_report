@@ -1,6 +1,7 @@
 $(function(){
 
   var currDate = new Date();
+  var today = new Date();
   var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   var dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -32,17 +33,26 @@ $(function(){
 
   function getData (dir) {
 
+    // date for retrieving data
     currDate = getNextDate(currDate, dir);
     $('#date-visu-graph').empty();
     $('#date-visu-graph').append(dayNames[currDate.getDay()]+" "+currDate.getDate().toString()+" "+monthNames[currDate.getMonth()]+" "+currDate.getFullYear().toString());
 
+    // disable/enable next button dep on date (user cannot ask for future dates)
+    if (today.getDate() == currDate.getDate() && today.getFullYear() == currDate.getFullYear() && today.getMonth() == currDate.getMonth()) {
+      $('#next-date').prop('disabled', 'true');
+    } else {
+      $('#next-date').removeAttr('disabled');
+    }
+
+
+    // postData
     dataToSend = { 'reqdatey' : currDate.getFullYear(),
       'reqdatem' : currDate.getMonth()+1,
       'reqdated' : currDate.getDate(),
       'tzinfo': 'America/Argentina/Buenos_Aires',
       'npph' : 2
     };
-    console.log(dataToSend);
 
     $.ajax({
       type: 'POST',
@@ -55,10 +65,17 @@ $(function(){
       success: function(json) {
 
         dataBarChart = json;
-        drawBarChart();
 
-        if (dataBarChart != []) {
+        if (dataBarChart.length != 0) {
+          $('#data-visualisation').empty();
+          $('#data-visualisation').append('<svg id="visualisation" width="'+fWidth+'" height="'+fHeight+'"></svg>');
+          drawBarChart();
+        } else {
+          cleanBarChart();
+          $('#data-visualisation').empty();
+          $('#data-visualisation').append('<h3>NO DATA FOR THIS DATE</h3>');
         }
+
 
         /*    $.each(arr, function(i, item){	
               html += '<tr name="'+i+'"><td>'+item.mId+'</td><td>'+item.mOriginalTitleTP+'</td></tr>';
