@@ -41,8 +41,10 @@ $(function(){
     // disable/enable next button dep on date (user cannot ask for future dates)
     if (today.getDate() == currDate.getDate() && today.getFullYear() == currDate.getFullYear() && today.getMonth() == currDate.getMonth()) {
       $('#next-date').prop('disabled', 'true');
+      $('#next-date').addClass('disabled-btn');
     } else {
       $('#next-date').removeAttr('disabled');
+      $('#next-date').removeClass('disabled-btn');
     }
 
 
