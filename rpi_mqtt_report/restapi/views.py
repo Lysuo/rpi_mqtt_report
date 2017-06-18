@@ -7,8 +7,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response 
 from rest_framework import status
 
-from mqtt_reporting.models import SensorDHEntry, SensorDHEntryComp
-from restapi.serializers import SensorDHEntrySerializer, SensorDHEntryCompSerializer
+from mqtt_reporting.models import SensorDHEntry
+from restapi.models import SensorDHResp, SensorDHEntryComp
+from restapi.serializers import SensorDHRespSerializer, SensorDHEntryCompSerializer
 
 from threading import Thread
 
@@ -34,13 +35,16 @@ class SensorDHEntryRest(APIView):
     for e in l:
       e.mDate = (e.mDate).astimezone(tz_r)
 
-    lcomp = computeData(l, int(d))
+    r = computeData(l, int(d))
+#    serializer = SensorDHEntryCompSerializer(lcomp, many=True)
+    serializer = SensorDHRespSerializer(r)
 
-    serializer = SensorDHEntryCompSerializer(lcomp, many=True)
     return Response(serializer.data)
 
 def computeData(inputL, d):
-
+  
+  r = SensorDHResp(mTimezoneData='America')
+  r.save()
   lcomp = []
   timeL = [e*0.01 for e in range(0, 2400, 100/d)]
 
@@ -52,7 +56,8 @@ def computeData(inputL, d):
     if len(lint) != 0:
       avt = float("%.2f" % round(float(sum(lint))/float(len(lint)), 2))
       avh = float("%.2f" % round(float(sum(linh))/float(len(linh)), 2))
-      o = SensorDHEntryComp(mHour=t, mTemperatureAv=avt, mHumidityAv=avh)
-      lcomp.append(o)
+      o = SensorDHEntryComp(mSensorDHResp=r, mHour=t, mTemperatureAv=avt, mHumidityAv=avh)
+      o.save()
+      #lcomp.append(o)
 
-  return lcomp
+  return r 

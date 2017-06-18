@@ -66,7 +66,7 @@ $(function(){
 
       success: function(json) {
 
-        dataBarChart = json;
+        dataBarChart = json.data;
 
         if (dataBarChart.length != 0) {
           $('#data-visualisation').empty();

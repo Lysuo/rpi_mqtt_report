@@ -1,4 +1,5 @@
-from mqtt_reporting.models import SensorDHEntry, SensorDHEntryComp
+from mqtt_reporting.models import SensorDHEntry
+from restapi.models import SensorDHResp, SensorDHEntryComp
 from rest_framework import serializers
 import datetime
 
@@ -20,3 +21,17 @@ class SensorDHEntryCompSerializer(serializers.ModelSerializer):
   class Meta:
     model = SensorDHEntryComp
     fields = ('temp', 'hum', 'hour')
+
+class SensorDHRespSerializer(serializers.ModelSerializer):
+  mTimezoneData = serializers.CharField()
+  mTemperatureMax = serializers.FloatField() 
+  mTemperatureMin = serializers.FloatField() 
+  mTemperatureAv = serializers.FloatField() 
+  mHumidityMax = serializers.FloatField()
+  mHumidityMin = serializers.FloatField()
+  mHumidityAv = serializers.FloatField()
+  data = SensorDHEntryCompSerializer(source='get_entries', many=True, read_only=True)
+
+  class Meta:
+    model = SensorDHResp
+    fields = ('mTimezoneData', 'mTemperatureMax', 'mTemperatureMin', 'mTemperatureAv', 'mHumidityMax', 'mHumidityMin', 'mHumidityAv', 'data')
