@@ -8,9 +8,11 @@ function drawBarChart() {
   }
 
   // set the dimensions of the canvas
-  var margin = {top: 20, right: 20, bottom: 70, left: 40},
-      width = 600 - margin.left - margin.right,
-      height = 350 - margin.top - margin.bottom;
+  var margin = {top: 40, right: 60, bottom: 40, left: 60},
+      width = 600,
+      height = 300;
+      fWidth = width + margin.left + margin.right;
+      fHeight = height + margin.top + margin.bottom;
 
   // define min/max of data set
   tempMin = d3.min(dataBarChart, function(d) { return Math.min(d.temp); });
@@ -21,9 +23,9 @@ function drawBarChart() {
   diffH = humMax - humMin;
 
   // set the ranges
-  var x = d3.scale.linear().range([0, width]).domain([0,24]);
-  var yt = d3.scale.linear().range([height, 0]).domain([tempMin-diffT/8, tempMax+diffT/8]);
-  var yh = d3.scale.linear().range([height, 0]).domain([humMin-diffH/8, humMax+diffH/8]);
+  var x = d3.scale.linear().range([margin.left, fWidth-margin.right]).domain([0,24]);
+  var yt = d3.scale.linear().range([fHeight-margin.bottom, margin.top]).domain([tempMin-diffT/8, tempMax+diffT/8]);
+  var yh = d3.scale.linear().range([fHeight-margin.bottom, margin.top]).domain([humMin-diffH/8, humMax+diffH/8]);
 
 
 
@@ -34,23 +36,39 @@ function drawBarChart() {
 
   // add the SVG element
   svg = d3.select("#visualisation").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g") .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+    .attr("width", fWidth)
+    .attr("height", fHeight)
+    .append("g");
 
   // Add axis
   svg.append("g")
     .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
+    .attr("transform", "translate(0,"+ (fHeight-margin.bottom) +")")
     .call(xAxis);
   svg.append("g")
     .attr("class", "y axis")
+    .attr("transform", "translate("+ margin.left +",0)")
     .call(ytAxis); 
   svg.append("g")       
     .attr("class", "y axis")  
-    .attr("transform", "translate(" + width + " ,0)") 
+    .attr("transform", "translate("+ (fWidth-margin.right) +",0)") 
     .call(yhAxis);
+
+  // Add titles for axis
+  svg.append("text")
+    .attr("text-anchor", "middle")
+    .attr("transform", "translate("+ margin.left/4 +","+margin.top+")rotate(-90)")
+    .text("T (°C)");
+
+  svg.append("text")
+    .attr("text-anchor", "middle")
+    .attr("transform", "translate("+ (fWidth-margin.right/4) +","+margin.top+")rotate(-90)")
+    .text("RH (%)");
+
+  svg.append("text")
+    .attr("text-anchor", "middle")
+    .attr("transform", "translate("+ (fWidth-margin.right) +","+(fHeight-margin.bottom/4)+")")
+    .text("Time (h)");
 
 
   // Add temperature bar chart
@@ -61,7 +79,7 @@ function drawBarChart() {
     .attr("x", function(d) { return x(d.hour); })
     .attr("width", 3)
     .attr("y", function(d) { return yt(d.temp); })
-    .attr("height", function(d) { return height - yt(d.temp); });
+    .attr("height", function(d) { return fHeight - margin.bottom - yt(d.temp); });
 
   // Add humidity line
   var humLine = d3.svg.line()
